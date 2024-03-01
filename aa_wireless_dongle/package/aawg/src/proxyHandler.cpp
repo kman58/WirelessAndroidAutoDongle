@@ -122,7 +122,7 @@ void AAWProxy::handleClient(int server_sock) {
 
     Logger::instance()->info("Tcp server accepted connection\n");
 
-    if (std::getenv("AAWG_CONNECTION_WAIT_FOR_ACCESSORY") == nullptr) {
+    if (Config::instance()->getConnectionStrategy() != ConnectionStrategy::USB_FIRST) {
         UsbManager::instance().enableDefaultAndWaitForAccessroy();
     }
 

@@ -5,6 +5,7 @@
 class BluezAdapterProxy;
 class AAWirelessProfile;
 class HSPHSProfile;
+class BLEAdvertisement;
 
 class BluetoothHandler {
 public:
@@ -27,10 +28,17 @@ private:
     void exportProfiles();
     void connectDevice();
 
+    void startAdvertising();
+    void stopAdvertising();
+
     std::shared_ptr<DBus::Dispatcher> m_dispatcher;
     std::shared_ptr<DBus::Connection> m_connection;
     std::shared_ptr<BluezAdapterProxy> m_adapter;
 
     std::shared_ptr<AAWirelessProfile> m_aawProfile;
     std::shared_ptr<HSPHSProfile> m_hspProfile;
+
+    std::shared_ptr<BLEAdvertisement> m_leAdvertisement;
+
+    std::string m_adapterAlias;
 };

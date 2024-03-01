@@ -9,6 +9,7 @@
 
 int main(void) {
     Logger::instance()->info("AA Wireless Dongle\n");
+    Logger::instance()->info("Connection Strategy: %d\n", Config::instance()->getConnectionStrategy());
 
     // Global init
     std::optional<std::thread> ueventThread =  UeventMonitor::instance().start();
@@ -17,7 +18,7 @@ int main(void) {
 
     while (true) {
         // Per connection setup and processing
-        if (std::getenv("AAWG_CONNECTION_WAIT_FOR_ACCESSORY") != nullptr) {
+        if (Config::instance()->getConnectionStrategy() == ConnectionStrategy::USB_FIRST) {
             Logger::instance()->info("Waiting for the accessory to connect first\n");
             UsbManager::instance().enableDefaultAndWaitForAccessroy();
         }
