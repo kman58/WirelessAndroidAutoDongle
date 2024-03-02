@@ -1,5 +1,6 @@
 #include <dirent.h>
 #include <string.h>
+#include <unistd.h>
 #include <future>
 
 #include "common.h"
@@ -67,6 +68,7 @@ void UsbManager::disableGadget(std::string gadgetName) {
 
 void UsbManager::switchToAccessoryGadget() {
     disableGadget(defaultGadgetName);
+    usleep(100000); // 0.1 second, keep the gadget disabled for a short time to let the host recognize the change
     enableGadget(accessoryGadgetName);
 
     Logger::instance()->info("USB Manager: Switched to accessory gadget from default\n");
